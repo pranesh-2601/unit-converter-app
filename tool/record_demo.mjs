@@ -4,6 +4,7 @@ import { chromium } from 'playwright';
 const project = process.env.DEMO_PROJECT;
 if (!project) throw new Error('DEMO_PROJECT is required');
 
+await fs.mkdir('demo', { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({
   viewport: project === 'profile-card-app'
@@ -19,7 +20,6 @@ try {
   await page.waitForSelector('flt-glass-pane', { timeout: 30000 });
   await page.waitForTimeout(1600);
 
-  // Flutter exposes its screen reader semantics after this control is activated.
   const enableAccessibility = page.getByText('Enable accessibility', { exact: true });
   if (await enableAccessibility.count()) {
     await enableAccessibility.click();
@@ -83,7 +83,7 @@ try {
     await page.getByText('10 / 10', { exact: true }).waitFor({ state: 'visible' });
     await page.waitForTimeout(2200);
   } else {
-    throw new Error(`Unsupported project: ${project}`);
+    throw new Error(\`Unsupported project: \${project}\`);
   }
 } finally {
   const video = page.video();
@@ -91,5 +91,5 @@ try {
   await browser.close();
   const recordedPath = await video.path();
   await fs.mkdir('demo-recording', { recursive: true });
-  await fs.copyFile(recordedPath, `demo-recording/${project}.webm`);
+  await fs.copyFile(recordedPath, \`demo-recording/\${project}.webm\`);
 }
