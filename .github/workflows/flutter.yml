@@ -22,5 +22,8 @@ jobs:
         run: flutter pub get
       - name: Run widget tests
         run: flutter test
+      - name: Configure Flutter web support
+        run: flutter create . --platforms web
       - name: Build Flutter web app
         run: flutter build web --release
+
