@@ -13,7 +13,7 @@ void main() {
 
     await tester.tap(find.byType(DropdownButtonFormField<UnitOption>).first);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kilometers').last);
+    await tester.tap(find.text('km').last);
     await tester.pumpAndSettle();
     await tester.tap(find.byType(DropdownButtonFormField<UnitOption>).last);
     await tester.pumpAndSettle();
